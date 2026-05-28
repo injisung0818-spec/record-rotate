@@ -76,7 +76,6 @@ ${coverDefs}
   </defs>
   <rect width="${dimensions.width}" height="${dimensions.height}" fill="#ffffff"/>
   ${items}
-  <rect width="${dimensions.width}" height="${dimensions.height}" fill="url(#sideFade)" pointer-events="none"/>
 </svg>`;
 }
 
