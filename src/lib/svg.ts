@@ -307,7 +307,7 @@ function renderLabel(
   return `<g opacity="0">
       <animate attributeName="opacity" values="${introOpacityValues}" keyTimes="${INTRO_KEY_TIMES}" dur="${INTRO_DURATION}s" begin="0s" calcMode="linear" fill="freeze"/>
       <animate attributeName="opacity" values="${loopOpacityValues}" keyTimes="${keyTimes}" dur="${duration}s" begin="${INTRO_DURATION}s" repeatCount="indefinite"/>
-      <text x="0" y="${y}" fill="#f6f6f6" font-family="Arial, Helvetica, sans-serif" font-size="${titleFontSize}" font-weight="700" text-anchor="middle">${escapeXml(truncate(album.title, 34))}</text>
-      <text x="0" y="${y + lineGap}" fill="#8c8c8c" font-family="Arial, Helvetica, sans-serif" font-size="${artistFontSize}" text-anchor="middle">${escapeXml(truncate(album.artist, 42))}</text>
+      <text x="0" y="${y}" fill="#000" font-family="Arial, Helvetica, sans-serif" font-size="${titleFontSize}" font-weight="700" text-anchor="middle">${escapeXml(truncate(album.title, 34))}</text>
+      <text x="0" y="${y + lineGap}" fill="#6b6b6b" font-family="Arial, Helvetica, sans-serif" font-size="${artistFontSize}" text-anchor="middle">${escapeXml(truncate(album.artist, 42))}</text>
     </g>`;
 }
