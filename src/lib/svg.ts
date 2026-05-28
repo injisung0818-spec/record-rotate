@@ -56,19 +56,6 @@ export function renderSvg(albums: Album[], dimensions: Dimensions, renderOptions
     <clipPath id="coverClip" clipPathUnits="objectBoundingBox">
       <rect width="1" height="1" rx="${COVER_RADIUS_RATIO}"/>
     </clipPath>
-    <linearGradient id="sideFade" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#000" stop-opacity="1"/>
-      <stop offset="18%" stop-color="#000" stop-opacity="0.55"/>
-      <stop offset="38%" stop-color="#000" stop-opacity="0"/>
-      <stop offset="62%" stop-color="#000" stop-opacity="0"/>
-      <stop offset="82%" stop-color="#000" stop-opacity="0.55"/>
-      <stop offset="100%" stop-color="#000" stop-opacity="1"/>
-    </linearGradient>
-    <radialGradient id="spotlight" cx="50%" cy="48%" r="48%">
-      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.14"/>
-      <stop offset="45%" stop-color="#ffffff" stop-opacity="0.05"/>
-      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
-    </radialGradient>
     <filter id="coverShadow" x="-30%" y="-30%" width="160%" height="170%">
       <feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#000000" flood-opacity="0.65"/>
     </filter>
