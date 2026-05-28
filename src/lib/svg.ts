@@ -74,8 +74,7 @@ export function renderSvg(albums: Album[], dimensions: Dimensions, renderOptions
     </filter>
 ${coverDefs}
   </defs>
-  <rect width="${dimensions.width}" height="${dimensions.height}" fill="#000"/>
-  <rect width="${dimensions.width}" height="${dimensions.height}" fill="url(#spotlight)"/>
+  <rect width="${dimensions.width}" height="${dimensions.height}" fill="#ffffff"/>
   ${items}
   <rect width="${dimensions.width}" height="${dimensions.height}" fill="url(#sideFade)" pointer-events="none"/>
 </svg>`;
