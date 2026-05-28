@@ -56,13 +56,28 @@ export function renderSvg(albums: Album[], dimensions: Dimensions, renderOptions
     <clipPath id="coverClip" clipPathUnits="objectBoundingBox">
       <rect width="1" height="1" rx="${COVER_RADIUS_RATIO}"/>
     </clipPath>
+    <linearGradient id="sideFade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
+      <stop offset="18%" stop-color="#ffffff" stop-opacity="0.55"/>
+      <stop offset="38%" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="62%" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="82%" stop-color="#ffffff" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="1"/>
+    </linearGradient>
+    <radialGradient id="spotlight" cx="50%" cy="48%" r="48%">
+      <stop offset="0%" stop-color="#000000" stop-opacity="0.14"/>
+      <stop offset="45%" stop-color="#000000" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
     <filter id="coverShadow" x="-30%" y="-30%" width="160%" height="170%">
-      <feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#000000" flood-opacity="0.65"/>
+      <feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#ffffff" flood-opacity="0.65"/>
     </filter>
 ${coverDefs}
   </defs>
   <rect width="${dimensions.width}" height="${dimensions.height}" fill="#ffffff"/>
+  <rect width="${dimensions.width}" height="${dimensions.height}" fill="url(#spotlight)"/>
   ${items}
+  <rect width="${dimensions.width}" height="${dimensions.height}" fill="url(#sideFade)" pointer-events="none"/>
 </svg>`;
 }
 
@@ -103,7 +118,7 @@ function renderCarouselItem(
         <animateTransform attributeName="transform" type="scale" values="${keyframes.introScaleValues}" keyTimes="${INTRO_KEY_TIMES}" dur="${INTRO_DURATION}s" begin="0s" calcMode="linear" fill="freeze"/>
         <animateTransform attributeName="transform" type="scale" values="${keyframes.loopScaleValues}" keyTimes="${keyframes.keyTimes}" dur="${keyframes.duration}s" begin="${INTRO_DURATION}s" repeatCount="indefinite"/>
         ${renderCoverUse(albumIndex, coverOffset, coverOffset, dimensions.baseSize)}
-        <rect x="${coverOffset}" y="${coverOffset}" width="${dimensions.baseSize}" height="${dimensions.baseSize}" rx="${cornerRadius}" fill="#000" opacity="${initialStyle.shade}">
+        <rect x="${coverOffset}" y="${coverOffset}" width="${dimensions.baseSize}" height="${dimensions.baseSize}" rx="${cornerRadius}" fill="#ffffff" opacity="${initialStyle.shade}">
           <animate attributeName="opacity" values="${keyframes.introShadeValues}" keyTimes="${INTRO_KEY_TIMES}" dur="${INTRO_DURATION}s" begin="0s" calcMode="linear" fill="freeze"/>
           <animate attributeName="opacity" values="${keyframes.loopShadeValues}" keyTimes="${keyframes.keyTimes}" dur="${keyframes.duration}s" begin="${INTRO_DURATION}s" repeatCount="indefinite"/>
         </rect>
