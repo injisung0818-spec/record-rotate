@@ -18,7 +18,7 @@ export default {
     return new Response(svg, {
       headers: {
         "content-type": "image/svg+xml; charset=utf-8",
-        "cache-control": "public, max-age=900, s-maxage=3600, stale-while-revalidate=86400",
+        "cache-control": "public, max-age=0, s-maxage=0, must-revalidate",
       },
     });
   },
