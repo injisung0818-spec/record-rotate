@@ -1,15 +1,14 @@
-const response = await fetch(imageUrl, {
-  headers: {
-    "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-    "referer": "https://music.apple.com/",
-  },
-});
 export async function imageToDataUri(imageUrl: string): Promise<string | undefined> {
   if (!imageUrl) {
     return undefined;
   }
 
-  const response = await fetch(imageUrl);
+  const response = await fetch(imageUrl, {
+    headers: {
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+      "referer": "https://music.apple.com/",
+    },
+  });
   if (!response.ok) {
     return undefined;
   }
