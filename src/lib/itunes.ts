@@ -10,6 +10,7 @@ const ARTWORK_OVERRIDES: Record<string, string> = {
   [makeOverrideKey("Mrs. GREEN APPLE", "Ao to Natsu")]: "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/7c/36/1a/7c361a6b-9f4c-8a77-0007-f548350c0e90/18UMGIM36633.rgb.jpg/600x600bb.jpg",
   [makeOverrideKey("음율", "행복론")]: "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/84/f5/99/84f59915-1cee-243e-87f3-02b8e96834c2/8809933236348.jpg/600x600bb.jpg",
   [makeOverrideKey("Mrs. GREEN APPLE", "Summer Shadow")]: "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/52/0e/26/520e26a9-4971-a144-1eea-fdbd8bfb0043/25UM1IM14224.rgb.jpg/600x600bb.jpg",
+  [makeOverrideKey("BUMP OF CHICKEN", "ray")]: "https://is1-ssl.mzstatic.com/image/thumb/Music113/v4/a0/83/f4/a083f4f3-3853-d374-3870-957a7df3791a/TFCC-86457WW.jpg/600x600bb.jpg",
 };
 
 export async function resolveAlbum(query: AlbumQuery): Promise<Album> {

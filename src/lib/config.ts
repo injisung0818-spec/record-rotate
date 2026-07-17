@@ -1,4 +1,4 @@
-export const MAX_ALBUMS = 7;
+export const MAX_ALBUMS = 8;
 export const DEFAULT_WIDTH = 760;
 export const ASPECT_RATIO = 280 / 760;
 export const MIN_WIDTH = 360;
