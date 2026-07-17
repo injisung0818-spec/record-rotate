@@ -2,8 +2,30 @@ import { imageToDataUri } from "./image";
 import type { Album, AlbumQuery, ITunesAlbumResult, ITunesArtistResult, ITunesSearchResponse } from "./types";
 import { normalizeSearchText } from "./utils";
 
+const ARTWORK_OVERRIDES: Record<string, string> = {
+  [makeOverrideKey("ZUTOMAYO", "Cream")]: "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/0a/3c/75/0a3c75bb-b239-e926-4ce0-7c26febd534a/25UMGIM62240.rgb.jpg/600x600bb.jpg",
+  [makeOverrideKey("Mrs. GREEN APPLE", "ライラック")]: "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/4c/3b/b2/4c3bb247-3be8-0c57-aa9a-7f1775a7b7a8/24UMGIM32931.rgb.jpg/600x600bb.jpg",
+  [makeOverrideKey("Peppertones", "Beginner's Luck")]: "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/48/5c/b0/485cb05b-7a51-c0fa-fa6d-6196827a151f/cover_KM0015169_1.jpg/600x600bb.jpg",
+  [makeOverrideKey("ZUTOMAYO", "沈香学")]: "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/94/5b/c5/945bc557-1eb6-bb02-900b-7a7b6e93aa9d/23UMGIM47498.rgb.jpg/600x600bb.jpg",
+  [makeOverrideKey("Mrs. GREEN APPLE", "Ao to Natsu")]: "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/7c/36/1a/7c361a6b-9f4c-8a77-0007-f548350c0e90/18UMGIM36633.rgb.jpg/600x600bb.jpg",
+  [makeOverrideKey("음율", "행복론")]: "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/84/f5/99/84f59915-1cee-243e-87f3-02b8e96834c2/8809933236348.jpg/600x600bb.jpg",
+  [makeOverrideKey("Mrs. GREEN APPLE", "Summer Shadow")]: "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/52/0e/26/520e26a9-4971-a144-1eea-fdbd8bfb0043/25UM1IM14224.rgb.jpg/600x600bb.jpg",
+};
+
 export async function resolveAlbum(query: AlbumQuery): Promise<Album> {
   const fallback = makeFallbackAlbum(query);
+  const artworkOverride = getArtworkOverride(query);
+
+  if (artworkOverride) {
+    const imageDataUri = await imageToDataUri(artworkOverride);
+
+    if (imageDataUri) {
+      return {
+        ...fallback,
+        imageDataUri,
+      };
+    }
+  }
 
   try {
     const album = query.artist && query.album
@@ -73,18 +95,34 @@ async function findArtist(artistName: string): Promise<ITunesArtistResult | unde
 }
 
 async function fetchITunes<T>(url: string): Promise<ITunesSearchResponse<T>> {
-  const response = await fetch(url, {
-    headers: {
-      accept: "application/json",
-      "user-agent": "record-rotate/0.1",
-    },
-  });
+  const candidates = [
+    url,
+    `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+  ];
+  let lastError: unknown;
 
-  if (!response.ok) {
-    throw new Error(`iTunes request failed: ${response.status}`);
+  for (const candidate of candidates) {
+    try {
+      const response = await fetch(candidate, {
+        headers: {
+          accept: "application/json",
+          "user-agent": "record-rotate/0.1",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`iTunes request failed: ${response.status}`);
+      }
+
+      const text = await response.text();
+
+      return JSON.parse(text) as ITunesSearchResponse<T>;
+    } catch (error) {
+      lastError = error;
+    }
   }
 
-  return response.json() as Promise<ITunesSearchResponse<T>>;
+  throw lastError;
 }
 
 function albumFromResult(result: ITunesAlbumResult | undefined, query: string): Album | null {
@@ -145,6 +183,26 @@ function isAlbumResult(result: ITunesAlbumResult | ITunesArtistResult): result i
 
 function upgradeArtworkUrl(url: string): string {
   return url.replace(/\/100x100bb\.(jpg|png|webp)$/i, "/600x600bb.$1");
+}
+
+function getArtworkOverride(query: AlbumQuery): string | undefined {
+  if (!query.artist || !query.album) {
+    return undefined;
+  }
+
+  return ARTWORK_OVERRIDES[makeOverrideKey(query.artist, query.album)];
+}
+
+function makeOverrideKey(artist: string, album: string): string {
+  return `${normalizeOverridePart(artist)}::${normalizeOverridePart(album)}`;
+}
+
+function normalizeOverridePart(value: string): string {
+  return value
+    .normalize("NFKC")
+    .toLowerCase()
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function makeFallbackAlbum(query: AlbumQuery): Album {
