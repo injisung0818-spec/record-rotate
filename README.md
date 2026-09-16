@@ -1,7 +1,7 @@
 # record-rotate
 
 <p align="center">
-  <img src="https://record-rotate.arkk200.workers.dev/?width=900&title=on&albums=Bewhy:The%20Blind%20Star,Bewhy:The%20Movie%20Star,Bewhy:032%20Funk,Bewhy:POP%20IS%20CRYIN%27" alt="Bewhy album covers rotating" />
+  <img src="https://record-rotate.arkk200.workers.dev/?width=900&title=on&albums=Bewhy:Time%20Travel,Bewhy:The%20Blind%20Star,Bewhy:The%20Movie%20Star,Bewhy:032%20Funk,Bewhy:POP%20IS%20CRYIN%27" alt="Bewhy album covers rotating" />
 </p>
 
 앨범 제목을 작성하면 iTunes Search API로 커버를 찾아 GitHub 프로필용 SVG 슬라이드를 만들어줍니다.
@@ -12,7 +12,7 @@
 ![record rotate](https://record-rotate.<your-subdomain>.workers.dev/?albums=Travis%20Scott:Rodeo,Kanye%20West:Graduation,Kendrick%20Lamar:DAMN.)
 ```
 
-`albums`는 쉼표로 구분합니다. 최대 7개까지 처리합니다. 앨범명만 넣어도 되지만, 검색 정확도를 위해 `Artist:Album` 또는 `Artist - Album` 형식을 권장합니다. `albums`가 없으면 앨범 커버는 표시하지 않습니다. 위 데모는 비와이의 서로 다른 앨범 4장을 사용합니다.
+`albums`는 쉼표로 구분합니다. 최대 7개까지 처리합니다. 앨범명만 넣어도 되지만, 검색 정확도를 위해 `Artist:Album` 또는 `Artist - Album` 형식을 권장합니다. `albums`가 없으면 앨범 커버는 표시하지 않습니다. 위 데모는 비와이의 서로 다른 앨범 5장을 사용합니다.
 
 ```txt
 ?albums=Travis Scott:Rodeo,Kanye West:Graduation,Kendrick Lamar:DAMN.
