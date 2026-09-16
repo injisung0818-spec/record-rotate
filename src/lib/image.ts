@@ -22,7 +22,10 @@ export async function imageToDataUri(imageUrl: string): Promise<string | undefin
     }
   }
 
-  return undefined;
+  // Some artwork hosts reject server-side downloads from a Worker.  The SVG can
+  // still render a proxied image URL directly, so keep that as the final fallback
+  // instead of producing an empty cover card.
+  return makeImageProxyUrl(imageUrl);
 }
 
 async function responseToDataUri(response: Response): Promise<string> {
@@ -36,7 +39,7 @@ async function responseToDataUri(response: Response): Promise<string> {
 function makeImageProxyUrl(imageUrl: string): string | undefined {
   try {
     const url = new URL(imageUrl);
-    const source = encodeURIComponent(`${url.host}${url.pathname}`);
+    const source = encodeURIComponent(url.toString());
 
     return `https://wsrv.nl/?url=${source}&w=600&h=600&fit=cover&output=jpg`;
   } catch {

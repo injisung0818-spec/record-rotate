@@ -275,7 +275,7 @@ function scaleDesignValue(value: number, scale: number): number {
 function renderCoverSymbol(album: Album, index: number): string {
   if (album.imageDataUri) {
     return `    <symbol id="cover-${index}" viewBox="0 0 100 100">
-      <image href="${album.imageDataUri}" x="0" y="0" width="100" height="100" preserveAspectRatio="xMidYMid slice" clip-path="url(#coverClip)"/>
+      <image href="${escapeXmlAttribute(album.imageDataUri)}" x="0" y="0" width="100" height="100" preserveAspectRatio="xMidYMid slice" clip-path="url(#coverClip)"/>
     </symbol>`;
   }
 
@@ -285,6 +285,14 @@ function renderCoverSymbol(album: Album, index: number): string {
       <text x="50" y="46" fill="#f5f5f5" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" text-anchor="middle">${escapeXml(truncate(album.title, 16))}</text>
       <text x="50" y="61" fill="#8b8b8b" font-family="Arial, Helvetica, sans-serif" font-size="7" text-anchor="middle">${escapeXml(truncate(album.artist, 20))}</text>
     </symbol>`;
+}
+
+function escapeXmlAttribute(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
 }
 
 function renderCoverUse(albumIndex: number, x: number, y: number, size: number): string {
